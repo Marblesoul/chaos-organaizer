@@ -64,9 +64,10 @@ class Store {
 
   /** Clear pin */
   clearPin(id) {
-    this._state.messages = this._state.messages.map((m) =>
-      m.id === id ? { ...m, pinned: false } : m,
-    );
+    this._state.messages = this._state.messages.map((m) => {
+      if (m.id === id) return { ...m, pinned: false };
+      return m;
+    });
     if (this._state.pinnedMessage?.id === id) {
       this._state.pinnedMessage = null;
     }

@@ -156,9 +156,12 @@ export class MessageInput {
   _updateStatus() {
     const status = store.get('connectionStatus');
     this._textarea.disabled = status !== 'open';
-    this._textarea.placeholder = status === 'open'
-      ? 'Написать сообщение...'
-      : status === 'connecting' ? 'Подключение...' : 'Нет соединения...';
+    const placeholders = {
+      open: 'Написать сообщение...',
+      connecting: 'Подключение...',
+      closed: 'Нет соединения...',
+    };
+    this._textarea.placeholder = placeholders[status] || 'Написать сообщение...';
   }
 
   _micIcon() {

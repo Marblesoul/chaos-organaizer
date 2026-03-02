@@ -13,7 +13,9 @@ function createDownloadBtn(url, filename) {
 }
 
 function renderContent(msg, bubble) {
-  const { type, content, url, size } = msg;
+  const {
+    type, content, url, size,
+  } = msg;
 
   if (type === 'text') {
     bubble.appendChild(linkify(content));

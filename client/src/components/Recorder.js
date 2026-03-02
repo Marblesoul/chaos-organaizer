@@ -54,7 +54,9 @@ export class Recorder {
 
   async _handleStop() {
     const mime = this._recorder.mimeType || 'audio/webm';
-    const ext = mime.includes('ogg') ? 'ogg' : mime.includes('mp4') ? 'm4a' : 'webm';
+    let ext = 'webm';
+    if (mime.includes('ogg')) ext = 'ogg';
+    else if (mime.includes('mp4')) ext = 'm4a';
     const blob = new Blob(this._chunks, { type: mime });
     const filename = `voice-${Date.now()}.${ext}`;
 

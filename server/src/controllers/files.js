@@ -6,6 +6,11 @@ const { getBotReply } = require('../utils/botResponder');
 
 const UPLOADS_DIR = path.resolve(__dirname, '../../uploads');
 
+// In production (Railway), RAILWAY_PUBLIC_DOMAIN is set automatically.
+// Locally it's empty, so relative URL works via webpack proxy.
+const BASE_URL = process.env.BASE_URL
+  || (process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : '');
+
 async function upload(ctx, broadcast) {
   const { file } = ctx.request.files || {};
   if (!file) {
@@ -30,7 +35,7 @@ async function upload(ctx, broadcast) {
   else if (mime.startsWith('video/')) type = 'video';
   else if (mime.startsWith('audio/')) type = 'audio';
 
-  const url = `/api/files/${filename}`;
+  const url = `${BASE_URL}/api/files/${filename}`;
   const msg = store.addMessage({
     type,
     content: originalName,

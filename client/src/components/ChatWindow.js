@@ -88,6 +88,7 @@ export class ChatWindow {
 
     // ── Input ──────────────────────────────────────────────────────────────
     const inputContainer = document.createElement('div');
+    inputContainer.className = 'input-container';
     this._messageInput = new MessageInput(inputContainer);
     this._messageInput.mount();
 
@@ -156,10 +157,16 @@ export class ChatWindow {
     this._sidebarOpen = !this._sidebarOpen;
     if (this._sidebarOpen) {
       this._sidebar.classList.remove('hidden');
-      this._sidebar.classList.add('flex');
+      this._sidebar.classList.add('flex', 'fixed', 'inset-y-0', 'left-0', 'z-40', 'shadow-xl');
+      this._backdrop = document.createElement('div');
+      this._backdrop.className = 'fixed inset-0 z-30 bg-black/30 md:hidden';
+      this._backdrop.addEventListener('click', () => this._toggleSidebar());
+      document.body.appendChild(this._backdrop);
     } else {
       this._sidebar.classList.add('hidden');
-      this._sidebar.classList.remove('flex');
+      this._sidebar.classList.remove('flex', 'fixed', 'inset-y-0', 'left-0', 'z-40', 'shadow-xl');
+      this._backdrop?.remove();
+      this._backdrop = null;
     }
   }
 }
